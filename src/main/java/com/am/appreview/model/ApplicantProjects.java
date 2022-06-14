@@ -11,8 +11,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,12 +20,10 @@ public class ApplicantProjects {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false, insertable = false, updatable = false)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="applicant_id", nullable=false)
-    private Applicant applicantProjects;
+    private Long applicantId;
 
     @Column(nullable = false)
     private String projectName;
@@ -40,19 +36,25 @@ public class ApplicantProjects {
     @Enumerated(EnumType.STRING)
     private EmploymentMode employmentMode;
 
+    @Column
     private int durationInWeeks;
 
+    @Column
     private String role;
 
+    @Column
     private int year;
 
+    @Column
     private int duration;
 
+    @Column
     private int teamSize;
 
-    private String repositoryUrl; // optional
+    @Column
+    private String repositoryUrl;
 
+    @Column
     private String liveUrl; // optional
-
 
 }

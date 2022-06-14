@@ -2,12 +2,12 @@ package com.am.appreview.service;
 
 import com.am.appreview.dto.ApplicantDTO;
 import com.am.appreview.model.Applicant;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface ApplicantService {
 
-    Page<Applicant> getAllApplicants(Pageable pageable);
+    List<ApplicantDTO> getAllApplicants();
 
     Applicant createApplicant(ApplicantDTO applicantDTO);
 

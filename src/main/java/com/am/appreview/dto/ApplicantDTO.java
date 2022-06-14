@@ -2,6 +2,8 @@ package com.am.appreview.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ApplicantDTO {
 
@@ -10,5 +12,6 @@ public class ApplicantDTO {
     private String name;
     private String githubUserName;
     private String status;
+    private List<ApplicantProjectsDTO> applicantProjects;
 
 }

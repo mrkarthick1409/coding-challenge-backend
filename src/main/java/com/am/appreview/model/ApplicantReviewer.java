@@ -1,8 +1,14 @@
 package com.am.appreview.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
+
+@Entity
+@Table(name = "applicant_reviewer")
+@Data
 public class ApplicantReviewer {
 
     @Id

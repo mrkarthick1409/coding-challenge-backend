@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ApplicantController {
@@ -22,8 +23,8 @@ public class ApplicantController {
     private ApplicantService applicantService;
 
     @GetMapping("/applicants")
-    public Page<Applicant> getAllApplicants(Pageable pageable) {
-        return applicantService.getAllApplicants(pageable);
+    public List<ApplicantDTO> getAllApplicants() {
+        return applicantService.getAllApplicants();
     }
 
     @PostMapping("/applicant")
