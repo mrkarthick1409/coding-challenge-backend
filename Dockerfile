@@ -1,5 +1,5 @@
 # Start with a base image containing Java runtime
-FROM openjdk:11
+FROM openjdk:11.0.1-jdk-slim-stretch
 
 # Add a volume pointing to /tmp
 VOLUME /tmp

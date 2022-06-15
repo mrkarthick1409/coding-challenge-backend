@@ -1,3 +1,51 @@
+
+**Steps to run app on local :**
+
+1. Clone project https://github.com/mrkarthick1409/coding-challenge-backend.git
+
+2. Run mvn clean package
+
+3. Build docker image using below command
+    **docker build -t app-review .**
+
+4. Run docker-compose up
+
+
+**API Description:**
+
+1. Create applicant API :
+   - Api to create applicant and also save applicant projects
+     - http://localhost:8081/app-review/applicant
+     - Sample Request :
+     - {
+       "emailAddress": "acasdasd@gmail.com",
+       "name": "abc",
+       "githubUserName": "aaa",
+       "applicantProjects": [
+       {
+       "projectName": "aaa",
+       "capacity": "PartTime",
+       "employmentMode": "Employed",
+       "durationInWeeks": "2",
+       "role": "dev",
+       "year": "2022",
+       "duration": "5",
+       "teamSize": "5",
+       "repositoryUrl": "",
+       "liveUrl": ""
+       }
+       ]
+       }
+ 
+2. Get all applicant API
+   - http://localhost:8081/app-review/applicants
+3. Update applicant API
+   - http://localhost:8081/app-review/applicant/{applicantId}
+   - You get {applicantId} from create applicant response
+4. Download applicant API
+   - http://localhost:8081/app-review/applicant/{applicantId}/download
+
+  
 # AM Coding Challenge - Backend (Flask)
 
 ## The case study: Application review
