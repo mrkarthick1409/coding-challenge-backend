@@ -2,6 +2,7 @@ package com.am.appreview.service.impl;
 
 import com.am.appreview.dto.ApplicantDTO;
 import com.am.appreview.enums.ApplicantStatus;
+import com.am.appreview.exception.AppReviewException;
 import com.am.appreview.model.Applicant;
 import com.am.appreview.model.ApplicantProjects;
 import com.am.appreview.repository.ApplicantProjectRepository;
@@ -31,6 +32,7 @@ import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -54,9 +56,13 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public Applicant createApplicant(ApplicantDTO applicantDTO) {
+    public Applicant createApplicant(ApplicantDTO applicantDTO) throws Exception {
         Applicant applicant = modelMapper.map(applicantDTO,Applicant.class);
         applicant.setStatus(ApplicantStatus.New);
+        Optional<Applicant> existingApplicant = applicantRepository.findByEmailAddress(applicantDTO.getEmailAddress());
+        if(existingApplicant.isPresent()) {
+            throw new AppReviewException("Applicant already exists");
+        }
         applicant =  applicantRepository.save(applicant);
         for (ApplicantProjects applicantProject : applicant.getApplicantProjects()) {
             applicantProject.setApplicantId(applicant.getId());
@@ -68,17 +74,23 @@ public class ApplicantServiceImpl implements ApplicantService {
     @Override
     @Transactional
     public Applicant updateApplicant(Long applicantId, ApplicantDTO applicantDTO) {
-        Applicant applicant = applicantRepository.findById(applicantId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid applicantId"));
-        applicantProjectRepository.deleteAllByApplicantId(applicantId);
-        Applicant newApplicant = modelMapper.map(applicantDTO,Applicant.class);
-        newApplicant.setId(applicantId);
-        newApplicant.setStatus(applicant.getStatus());
-        for (ApplicantProjects applicantProject : newApplicant.getApplicantProjects()) {
-            applicantProject.setApplicantId(applicantId);
+        Applicant applicant;
+        try {
+            applicant = applicantRepository.findById(applicantId)
+                    .orElseThrow(() -> new AppReviewException("Invalid applicantId"));
+            applicantProjectRepository.deleteAllByApplicantId(applicantId);
+            Applicant newApplicant = modelMapper.map(applicantDTO,Applicant.class);
+            newApplicant.setId(applicantId);
+            newApplicant.setStatus(applicant.getStatus());
+            for (ApplicantProjects applicantProject : newApplicant.getApplicantProjects()) {
+                applicantProject.setApplicantId(applicantId);
+            }
+            applicantProjectRepository.saveAll(newApplicant.getApplicantProjects());
+            applicant = applicantRepository.save(newApplicant);
+        } catch (Exception e) {
+            throw new AppReviewException("Error updating applicant: "+e.getMessage());
         }
-        applicantProjectRepository.saveAll(newApplicant.getApplicantProjects());
-        return applicantRepository.save(newApplicant);
+        return applicant;
     }
 
     @Override

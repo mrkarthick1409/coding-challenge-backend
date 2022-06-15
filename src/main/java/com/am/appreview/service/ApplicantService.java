@@ -10,7 +10,7 @@ public interface ApplicantService {
 
     List<ApplicantDTO> getAllApplicants();
 
-    Applicant createApplicant(ApplicantDTO applicantDTO);
+    Applicant createApplicant(ApplicantDTO applicantDTO) throws Exception;
 
     Applicant updateApplicant(Long applicantId, ApplicantDTO applicantDTO);
 

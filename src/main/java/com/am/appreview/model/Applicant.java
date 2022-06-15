@@ -27,7 +27,7 @@ public class Applicant {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String emailAddress;
 
     @Column(nullable = false)
