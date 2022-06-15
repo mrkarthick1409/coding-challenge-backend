@@ -1,0 +1,19 @@
+<html>
+<body>
+Candidate Name : ${applicant.getName()} <br/>
+Email address : ${applicant.getEmailAddress()} <br/>
+Github username : ${applicant.getGithubUserName()} <br/><br/>
+
+<b>Applicant Projects</b> <br/><br/>
+
+#foreach( $project in ${applicant.getApplicantProjects()})
+    Project Name : ${project.getProjectName()} <br/>
+    Role : ${project.getRole()} <br/>
+    Capacity :  ${project.getCapacity()} <br/>
+    Duration : ${project.getDuration()} <br/>
+    Employment Mode : ${project.getEmploymentMode()} <br/>
+    Live Url : ${project.getLiveUrl()} <br/>
+    Repo Url : ${project.getRepositoryUrl()} <br/>
+#end
+</body>
+</html>
